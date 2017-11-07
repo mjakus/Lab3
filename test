@@ -1,0 +1,41 @@
+#! /usr/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x1be3dc0 .scope module, "datamemory" "datamemory" 2 1;
+ .timescale 0 0;
+P_0x1bd29d8 .param/l "addresswidth" 2 3, +C4<0111>;
+P_0x1bd2a00 .param/l "depth" 2 4, +C4<010000000>;
+P_0x1bd2a28 .param/l "width" 2 5, +C4<01000>;
+L_0x1c15c00 .functor BUFZ 8, L_0x1c15b10, C4<00000000>, C4<00000000>, C4<00000000>;
+v0x1bd2690_0 .net *"_s0", 7 0, L_0x1c15b10; 1 drivers
+v0x1c15720_0 .net "address", 6 0, C4<zzzzzzz>; 0 drivers
+v0x1c157c0_0 .net "clk", 0 0, C4<z>; 0 drivers
+v0x1c15860_0 .net "dataIn", 7 0, C4<zzzzzzzz>; 0 drivers
+v0x1c15910_0 .net "dataOut", 7 0, L_0x1c15c00; 1 drivers
+v0x1c159b0 .array "memory", 0 127, 7 0;
+v0x1c15a70_0 .net "writeEnable", 0 0, C4<z>; 0 drivers
+E_0x1bd3410 .event posedge, v0x1c157c0_0;
+L_0x1c15b10 .array/port v0x1c159b0, C4<zzzzzzz>;
+    .scope S_0x1be3dc0;
+T_0 ;
+    %wait E_0x1bd3410;
+    %load/v 8, v0x1c15a70_0, 1;
+    %jmp/0xz  T_0.0, 8;
+    %load/v 8, v0x1c15860_0, 8;
+    %ix/getv 3, v0x1c15720_0;
+    %jmp/1 t_0, 4;
+    %ix/load 0, 8, 0; word width
+    %ix/load 1, 0, 0; part off
+    %assign/av v0x1c159b0, 0, 8;
+t_0 ;
+T_0.0 ;
+    %jmp T_0;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "datamemory.v";
